@@ -11,12 +11,21 @@ public class Task {
         this.status = false;
     }
 
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + taskName;
+    }
+
     public String getTaskName() {
         return taskName;
     }
 
     public Boolean getStatus() {
         return status;
+    }
+
+    public String getStatusIcon() {
+        return (status ? "X" : " ");
     }
 
     public void setItemName(String taskName) {
