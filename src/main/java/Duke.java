@@ -22,7 +22,7 @@ public class Duke {
                 default:
                     if(isItem(userInput)) {
                         if (isItemExists(userInput) == false) {
-                            Task item = new Task(userInput, false);
+                            Task item = new Task(userInput);
                             itemList.add(item);
                             System.out.println("Item added");
                         } else {

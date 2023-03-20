@@ -1,14 +1,14 @@
 public class Task {
-    private String taskName;
-    private Boolean status;
+    protected String taskName;
+    protected Boolean status;
 
     public Task(){
-        this("Default Item", false);
+        this("Default Task");
     }
 
-    public Task(String taskName, Boolean status) {
+    public Task(String taskName) {
         this.taskName = taskName;
-        this.status = status;
+        this.status = false;
     }
 
     public String getTaskName() {
