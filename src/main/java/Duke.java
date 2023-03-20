@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Duke {
-    private static ArrayList<Item> itemList = new ArrayList<>();
+    private static ArrayList<Task> itemList = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -22,7 +22,7 @@ public class Duke {
                 default:
                     if(isItem(userInput)) {
                         if (isItemExists(userInput) == false) {
-                            Item item = new Item(userInput, false);
+                            Task item = new Task(userInput, false);
                             itemList.add(item);
                             System.out.println("Item added");
                         } else {
@@ -63,7 +63,7 @@ public class Duke {
 
     public static boolean isItemExists(String item) {
         for(int i=0; i<itemList.size(); i++) {
-            if(itemList.get(i).getItemName().equalsIgnoreCase(item)) {
+            if(itemList.get(i).getTaskName().equalsIgnoreCase(item)) {
                 return true;
             }
         }
@@ -81,8 +81,8 @@ public class Duke {
         String borderLine = "\t____________________________________________________________";
         System.out.println(borderLine);
         for(int i=0; i<itemList.size(); i++) {
-            if(isItem(itemList.get(i).getItemName())) {
-                System.out.println("\t" + (i + 1) + ". [" + getStatusSymbol(itemList.get(i).getStatus()) + "] " + itemList.get(i).getItemName() + "\t");
+            if(isItem(itemList.get(i).getTaskName())) {
+                System.out.println("\t" + (i + 1) + ". [" + getStatusSymbol(itemList.get(i).getStatus()) + "] " + itemList.get(i).getTaskName() + "\t");
             }
         }
         System.out.println(borderLine);
@@ -103,7 +103,7 @@ public class Duke {
             if(i+1 == itemNo) {
                 itemList.get(i).setStatus(status);
                 printMarkOrUnmarkItem(status);
-                System.out.println("\t [" + getStatusSymbol(itemList.get(i).getStatus()) + "] " + itemList.get(i).getItemName() + "\t");
+                System.out.println("\t [" + getStatusSymbol(itemList.get(i).getStatus()) + "] " + itemList.get(i).getTaskName() + "\t");
             }
         }
         System.out.println(borderLine);
