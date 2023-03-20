@@ -29,21 +29,25 @@ public class Duke {
                         }
                     }
 
-                        if(userInput.contains("mark") || userInput.contains("unmark")) {
-                            markOrUnmarkTask(userInput);
-                        }
+                    if(userInput.contains("mark") || userInput.contains("unmark")) {
+                        markOrUnmarkTask(userInput);
+                    }
                     
-                        if(userInput.contains("todo")) {
-                            setToDoTask(userInput);
-                        }
+                    if(userInput.contains("todo")) {
+                        setToDoTask(userInput);
+                    }
 
-                        if(userInput.contains("deadline")) {
-                            setDeadlineTask(userInput);
-                        }
+                    if(userInput.contains("deadline")) {
+                        setDeadlineTask(userInput);
+                    }
                     
-                        if(userInput.contains("event")) {
-                            setEventTask(userInput);
-                        }     
+                    if(userInput.contains("event")) {
+                        setEventTask(userInput);
+                    }     
+
+                    if(userInput.contains("delete")) {
+                        removeTask(userInput);
+                    }
                 
                     break;
             }
@@ -77,7 +81,7 @@ public class Duke {
         if(input.contains("list") || input.contains("mark") 
         || input.contains("unmark") || input.contains("todo")
         || input.contains("deadline") || input.contains("event") 
-        || input.equals(" ")) {
+        || input.contains("delete") || input.equals(" ")) {
             return false;
         }
         return true;
@@ -163,7 +167,7 @@ public class Duke {
                     Task toDoTask = new Todo(taskName, true);
                     toDoTask.setStatus(taskList.get(i).getStatus()); 
                     taskList.set(i, toDoTask);
-                    printTaskUpdates(toDoTask.toString());    
+                    printTaskUpdates(toDoTask.toString(), TaskUpdateEnum.UPDATE);    
                 }
             }
 
@@ -195,7 +199,7 @@ public class Duke {
                     Task deadlineTask = new Deadline(taskName, day);
                     deadlineTask.setStatus(taskList.get(i).getStatus()); 
                     taskList.set(i, deadlineTask);
-                    printTaskUpdates(deadlineTask.toString());
+                    printTaskUpdates(deadlineTask.toString(), TaskUpdateEnum.UPDATE);
                 } 
             }
 
@@ -228,7 +232,7 @@ public class Duke {
                     Task eventTask = new Event(taskName, from, to);
                     eventTask.setStatus(taskList.get(i).getStatus()); 
                     taskList.set(i, eventTask);
-                    printTaskUpdates(eventTask.toString());
+                    printTaskUpdates(eventTask.toString(), TaskUpdateEnum.UPDATE);
                 }
             }
 
@@ -240,8 +244,38 @@ public class Duke {
         } 
     }
 
+    private static void removeTask(String userInput) {
+        try {
+            String[] taskArray = userInput.split(" ", 2);
+            String taskNumber = taskArray[1];
 
-    private static void printTaskUpdates(String taskDetails) {
-        System.out.println("\tGot it. I've added this task:" + "\n\t " + taskDetails + "\n\tNow you have " + taskList.size() + " in the list.");
+            if(taskNumber == "") 
+                throw new DukeException();
+
+            int taskNo = Integer.parseInt(userInput.split(" ", 2)[1]); 
+
+            for(int i=0; i<taskList.size(); i++) {
+                if(i+1 == taskNo) {
+                    taskList.remove(i);
+                    printTaskUpdates(taskList.get(i).toString(), TaskUpdateEnum.DELETE);
+                }
+            }
+
+        } catch(ArrayIndexOutOfBoundsException _exception) {
+            System.out.println("☹ OOPS!!! The task number cannot be empty.");
+        } catch(DukeException exception) {
+            System.out.println("☹ OOPS!!! The task number cannot be empty.");
+        } 
+    }
+
+    private static void printTaskUpdates(String taskDetails, TaskUpdateEnum updateType) {
+        String message = "";
+        if(updateType == TaskUpdateEnum.UPDATE) {
+            message = "Got it. I've added this task:";
+        } else if(updateType == TaskUpdateEnum.DELETE) {
+            message = "Noted. I've removed this task:";
+        }
+
+        System.out.println("\t" + message + "\n\t " + taskDetails + "\n\tNow you have " + taskList.size() + " in the list.");
     }
 }
