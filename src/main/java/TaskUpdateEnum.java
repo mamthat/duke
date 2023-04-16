@@ -1,4 +1,0 @@
-enum TaskUpdateEnum {
-    UPDATE,
-    DELETE, 
-}
